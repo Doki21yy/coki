@@ -3,302 +3,975 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Builders Digest — 2026/03/29 01:52</title>
+  <title>Coki Knowledge Base</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
       --bg: #0a0a0f;
-      --surface: #12121a;
-      --surface2: #1a1a25;
-      --border: #2a2a3a;
-      --text: #e8e8f0;
-      --text-muted: #8888a0;
+      --card-bg: #111118;
+      --card-hover: #1a1a25;
       --accent: #6366f1;
-      --accent2: #8b5cf6;
-      --accent-glow: rgba(99, 102, 241, 0.15);
-      --twitter: #1da1f2;
-      --podcast: #f97316;
-      --blog: #22c55e;
+      --accent-hover: #818cf8;
+      --text-primary: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --border: #1e1e2e;
+      --shadow: rgba(99, 102, 241, 0.1);
+      --radius: 12px;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
+      color: var(--text-primary);
       line-height: 1.6;
+      min-height: 100vh;
     }
-    .container { max-width: 720px; margin: 0 auto; padding: 48px 24px 96px; }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header */
     header {
+      padding: 60px 0 40px;
       text-align: center;
-      margin-bottom: 56px;
-      position: relative;
     }
-    header::before {
-      content: '';
-      position: absolute;
-      top: -40px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 200px;
-      height: 200px;
-      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      padding: 6px 14px;
-      border-radius: 100px;
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-muted);
-      margin-bottom: 24px;
-      letter-spacing: 0.5px;
-    }
-    .badge .dot {
-      width: 6px; height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-    h1 {
-      font-size: 36px;
+
+    header .logo {
+      font-size: 2.5rem;
       font-weight: 700;
-      letter-spacing: -0.5px;
-      margin-bottom: 8px;
-      background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+      background: linear-gradient(135deg, var(--accent), var(--accent-hover));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
     }
-    .subtitle { font-size: 16px; color: var(--text-muted); }
-    .stats-bar { display: flex; justify-content: center; gap: 32px; margin-top: 32px; flex-wrap: wrap; }
-    .stat { text-align: center; }
-    .stat-num { font-size: 28px; font-weight: 700; color: var(--accent); font-family: 'JetBrains Mono', monospace; }
-    .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-top: 4px; }
-    .section-divider { display: flex; align-items: center; gap: 16px; margin: 48px 0 32px; }
-    .section-divider .line { flex: 1; height: 1px; background: var(--border); }
-    .section-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
-    .section-label .icon { width: 20px; height: 20px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 12px; }
-    .icon-x { background: rgba(29, 161, 242, 0.15); color: var(--twitter); }
-    .icon-podcast { background: rgba(249, 115, 22, 0.15); color: var(--podcast); }
-    .icon-blog { background: rgba(34, 197, 94, 0.15); color: var(--blog); }
-    .builder-card {
-      background: var(--surface);
+
+    header .tagline {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+    }
+
+    /* Stats Bar */
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      padding: 20px;
+      background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 28px;
-      margin-bottom: 20px;
-      position: relative;
-      transition: border-color 0.2s, transform 0.2s;
+      border-radius: var(--radius);
+      margin-bottom: 48px;
+      flex-wrap: wrap;
     }
-    .builder-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .builder-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 16px;
-      background: linear-gradient(135deg, var(--accent-glow) 0%, transparent 50%);
-      opacity: 0;
-      transition: opacity 0.2s;
-      pointer-events: none;
+
+    .stat {
+      text-align: center;
     }
-    .builder-card:hover::before { opacity: 1; }
-    .builder-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
-    .builder-avatar {
-      width: 44px; height: 44px;
+
+    .stat .value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .stat .label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: 56px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-icon {
+      font-size: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+
+    .section-count {
+      margin-left: auto;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      background: var(--card-hover);
+      box-shadow: 0 12px 40px var(--shadow);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      background: linear-gradient(135deg, var(--accent), #8b5cf6);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 700;
-      font-size: 16px;
-      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
       flex-shrink: 0;
     }
-    .builder-info { flex: 1; }
-    .builder-name { font-weight: 600; font-size: 15px; margin-bottom: 2px; }
-    .builder-role { font-size: 13px; color: var(--text-muted); }
-    .builder-content { font-size: 14px; line-height: 1.75; color: var(--text); margin-bottom: 16px; }
-    .builder-content p { margin-bottom: 10px; }
-    .builder-content p:last-child { margin-bottom: 0; }
-    blockquote {
-      border-left: 3px solid var(--accent);
-      padding-left: 16px;
-      margin: 12px 0;
-      color: var(--text-muted);
-      font-style: italic;
-      font-size: 13px;
+
+    .card-meta {
+      flex: 1;
+      min-width: 0;
     }
-    .builder-link {
+
+    .card-author {
+      font-weight: 600;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-role {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .card-type-badge {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--accent-hover);
+      flex-shrink: 0;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .card-summary {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .engagement {
+      display: flex;
+      gap: 12px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .engagement span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .card-link {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 12px;
-      color: var(--text-muted);
+      padding: 6px 14px;
+      background: var(--accent);
+      color: #fff;
       text-decoration: none;
-      padding: 6px 12px;
-      background: var(--surface2);
       border-radius: 8px;
-      border: 1px solid var(--border);
-      transition: all 0.2s;
-      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      font-weight: 500;
+      transition: background 0.2s ease;
     }
-    .builder-link:hover { color: var(--twitter); border-color: var(--twitter); }
-    .builder-link svg { width: 12px; height: 12px; }
-    .engagement { display: flex; gap: 16px; margin-top: 12px; }
-    .eng-item { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--text-muted); }
-    .no-content {
-      text-align: center;
-      padding: 48px;
-      color: var(--text-muted);
-      font-size: 14px;
-      background: var(--surface);
-      border: 1px dashed var(--border);
-      border-radius: 16px;
+
+    .card-link:hover {
+      background: var(--accent-hover);
     }
+
+    /* Footer */
     footer {
       text-align: center;
-      margin-top: 64px;
-      padding-top: 32px;
+      padding: 48px 0;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
       border-top: 1px solid var(--border);
-      color: var(--text-muted);
-      font-size: 12px;
+      margin-top: 48px;
     }
-    footer a { color: var(--accent); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
-    @media (max-width: 600px) {
-      h1 { font-size: 26px; }
-      .container { padding: 32px 16px 64px; }
-      .stats-bar { gap: 20px; }
-      .builder-card { padding: 20px; }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-bar {
+        gap: 20px;
+      }
+
+      header .logo {
+        font-size: 2rem;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <div class="badge"><span class="dot"></span> AI Builders Digest</div>
-      <h1>AI Builders Digest</h1>
-      <p class="subtitle">{{date}}</p>
-      <div class="stats-bar">
-        <div class="stat"><div class="stat-num">12</div><div class="stat-label">Builders</div></div>
-        <div class="stat"><div class="stat-num">27</div><div class="stat-label">推文</div></div>
-        {{#podcastCount}}<div class="stat"><div class="stat-num">0</div><div class="stat-label">播客</div></div>{{/podcastCount}}
-        {{#blogCount}}<div class="stat"><div class="stat-num">0</div><div class="stat-label">博客</div></div>{{/blogCount}}
-      </div>
+      <div class="logo">🦞 Coki Knowledge Base</div>
+      <p class="tagline">AI Builders 精选内容 · 每日更新</p>
     </header>
 
-    
-    <div class="section-divider">
-      <div class="line"></div>
-      <div class="section-label"><span class="icon icon-x">𝕏</span> X / Twitter</div>
-      <div class="line"></div>
+    <div class="stats-bar">
+      <div class="stat">
+        <div class="value">27</div>
+        <div class="label">精选内容</div>
+      </div>
+      <div class="stat">
+        <div class="value">2</div>
+        <div class="label">内容来源</div>
+      </div>
+      <div class="stat">
+        <div class="value">3月29日</div>
+        <div class="label">更新日期</div>
+      </div>
     </div>
-    
-    <div class="section-divider">
-      <div class="line"></div>
-      <div class="section-label"><span class="icon icon-x">𝕏</span> X / Twitter</div>
-      <div class="line"></div>
-    </div>
-    
-    <div class="section-divider">
-      <div class="line"></div>
-      <div class="section-label"><span class="icon icon-x">𝕏</span> X / Twitter</div>
-      <div class="line"></div>
-    </div>
-    
-    <div class="section-divider">
-      <div class="line"></div>
-      <div class="section-label"><span class="icon icon-x">𝕏</span> X / Twitter</div>
-      <div class="line"></div>
-    </div>
-    
-    <div class="section-divider">
-      <div class="line"></div>
-      <div class="section-label"><span class="icon icon-x">𝕏</span> X / Twitter</div>
-      <div class="line"></div>
-    </div>
-    
-    <div class="section-divider">
-      <div class="line"></div>
-      <div class="section-label"><span class="icon icon-x">𝕏</span> X / Twitter</div>
-      <div class="line"></div>
-    </div>
-    
-    <div class="section-divider">
-      <div class="line"></div>
-      <div class="section-label"><span class="icon icon-x">𝕏</span> X / Twitter</div>
-      <div class="line"></div>
-    </div>
-    
-    <div class="section-divider">
-      <div class="line"></div>
-      <div class="section-label"><span class="icon icon-x">𝕏</span> X / Twitter</div>
-      <div class="line"></div>
-    </div>
-    
-    <div class="section-divider">
-      <div class="line"></div>
-      <div class="section-label"><span class="icon icon-x">𝕏</span> X / Twitter</div>
-      <div class="line"></div>
-    </div>
-    
-    <div class="section-divider">
-      <div class="line"></div>
-      <div class="section-label"><span class="icon icon-x">𝕏</span> X / Twitter</div>
-      <div class="line"></div>
-    </div>
-    
-    <div class="section-divider">
-      <div class="line"></div>
-      <div class="section-label"><span class="icon icon-x">𝕏</span> X / Twitter</div>
-      <div class="line"></div>
-    </div>
-    
-    <div class="section-divider">
-      <div class="line"></div>
-      <div class="section-label"><span class="icon icon-x">𝕏</span> X / Twitter</div>
-      <div class="line"></div>
-    </div>
-    
 
-    {{#xBuilders}}
-    <div class="builder-card">
-      <div class="builder-header">
-        <div class="builder-avatar">{{avatar}}</div>
-        <div class="builder-info">
-          <div class="builder-name">{{name}}</div>
-          <div class="builder-role">{{role}}</div>
+    
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">𝕏</span>
+        <h2 class="section-title">Twitter/X</h2>
+        <span class="section-count">27</span>
+      </div>
+      <div class="cards-grid">
+        
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">GA</div>
+        <div class="card-meta">
+          <div class="card-author">Garry Tan</div>
+          <div class="card-role">President &amp; CEO @ycombinator —Founder https://t.co/7aoJjp1iIK—designer/engineer </div>
         </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
       </div>
-      <div class="builder-content">{{{content}}}</div>
-      <div class="engagement">
-        {{#likes}}<div class="eng-item">❤️ {{likes}}</div>{{/likes}}
-        {{#retweets}}<div class="eng-item">🔁 {{retweets}}</div>{{/retweets}}
-        {{#replies}}<div class="eng-item">💬 {{replies}}</div>{{/replies}}
-      </div>
-      <div style="margin-top: 12px;">
-        <a href="{{url}}" target="_blank" class="builder-link">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          查看原推
+      <div class="card-title">This is why on GStack I usually just run /plan-eng-review and /ship and it works...</div>
+      <div class="card-summary">This is why on GStack I usually just run /plan-eng-review and /ship and it works https://t.co/qZ2dYsxrdk</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/garrytan/status/2037776210898600402" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
         </a>
       </div>
     </div>
-    {{/xBuilders}}
 
-    
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">GA</div>
+        <div class="card-meta">
+          <div class="card-author">Garry Tan</div>
+          <div class="card-role">President &amp; CEO @ycombinator —Founder https://t.co/7aoJjp1iIK—designer/engineer </div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">We live in remarkable times https://t.co/qJkMjZ9bGM</div>
+      <div class="card-summary">We live in remarkable times https://t.co/qJkMjZ9bGM</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/garrytan/status/2037775207289831910" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
 
-    
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">GA</div>
+        <div class="card-meta">
+          <div class="card-author">Garry Tan</div>
+          <div class="card-role">President &amp; CEO @ycombinator —Founder https://t.co/7aoJjp1iIK—designer/engineer </div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">I have to say this interview changed my life. Hearing how Boris thinks about sof...</div>
+      <div class="card-summary">I have to say this interview changed my life. Hearing how Boris thinks about software spurred me to work much harder on releasing my own way of doing things and on iterating fast on how I build. Hard to believe it has only been a month since this one. https://t.co/y0y5JmQodL</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/garrytan/status/2037772478198739346" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">AA</div>
+        <div class="card-meta">
+          <div class="card-author">Aaron Levie</div>
+          <div class="card-role">ceo @box - your business lives in content. unleash it with AI</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">The big gap in most enterprises being able to automate work is being able to get...</div>
+      <div class="card-summary">The big gap in most enterprises being able to automate work is being able to get right context to the agents.
+
+We experience a huge benefit in coding in tech because the problem is generally far simpler than other areas of knowledge work. The codebase contains a bunch of necessary context, access controls and permissions are generally not a major concern, the users are technical enough to supply the context, and the final output is generally quickly verifiable. 
+
+Most knowledge work doesn’t look like this. The data is sitting in legacy silos that don’t easily connect to agents, the access controls are all out of whack (people have either too much or too little access), the information isn’t agent-ready, and more. 
+
+This is the big context gap for any type of agentic workflows in most organizations right. The platforms that make solving this easy, and the companies that retool their workflows to enable this, will be the winners in a world of agents.</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/levie/status/2037744753073385518" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">NI</div>
+        <div class="card-meta">
+          <div class="card-author">Nikunj Kothari</div>
+          <div class="card-role">partner @fpvventures - investing in seed/A. previous: early hire @meter, @opendo</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">If X built something like this natively, I'd honestly pay them $50/mo.. but till...</div>
+      <div class="card-summary">If X built something like this natively, I'd honestly pay them $50/mo.. but till then it was fun to run &quot;intelligence&quot; to understand all my followers ✌️ https://t.co/wrcnLLxCcx</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/nikunj/status/2037743784210132995" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">NA</div>
+        <div class="card-meta">
+          <div class="card-author">Nan Yu</div>
+          <div class="card-role">head of product @linear</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">Cmon man 
+
+https://t.co/lVIY21vy87</div>
+      <div class="card-summary">Cmon man 
+
+https://t.co/lVIY21vy87</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/thenanyu/status/2037737596663509363" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">PE</div>
+        <div class="card-meta">
+          <div class="card-author">Peter Steinberger</div>
+          <div class="card-role">Polyagentmorous ClawFather. Came back from retirement to mess with AI and help a</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">Another sick upcoming feature:
+
+/acp spawn codex --bind here
+LOOK AT ME, I AM CO...</div>
+      <div class="card-summary">Another sick upcoming feature:
+
+/acp spawn codex --bind here
+LOOK AT ME, I AM CODEX NOW
+
+You could bind codex/claude code/opencode already in threads, now you can take over your current session as well.</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/steipete/status/2037725493315707290" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">PE</div>
+        <div class="card-meta">
+          <div class="card-author">Peter Steinberger</div>
+          <div class="card-role">Polyagentmorous ClawFather. Came back from retirement to mess with AI and help a</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">The next version of OpenClaw is also an MCP, you can use it instead of Anthropic...</div>
+      <div class="card-summary">The next version of OpenClaw is also an MCP, you can use it instead of Anthropic's message channel MCP to connect to a much wider range of message providers.
+
+(I know, this is awkward)</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/steipete/status/2037715163562815817" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">PE</div>
+        <div class="card-meta">
+          <div class="card-author">Peter Steinberger</div>
+          <div class="card-role">Polyagentmorous ClawFather. Came back from retirement to mess with AI and help a</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">Seriously, I can tell on the PR what you used. https://t.co/iRuwaa1dZr</div>
+      <div class="card-summary">Seriously, I can tell on the PR what you used. https://t.co/iRuwaa1dZr</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/steipete/status/2037712695470739575" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">PE</div>
+        <div class="card-meta">
+          <div class="card-author">Peter Yang</div>
+          <div class="card-role">I share extremely practical AI tutorials and interviews | Join 140K+ readers at </div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">The best way to learn to use Claude Cowork is from the designer who helped build...</div>
+      <div class="card-summary">The best way to learn to use Claude Cowork is from the designer who helped build it.
+
+Don't miss my new episode with Jenny this weekend where she shared:
+
+→ How she uses Cowork at Anthropic
+→ Live demo: From feedback to product deck
+→ The real story behind Cowork's creation
+
+📌 Subscribe to get it on Sunday: https://t.co/Ggqaa3F11Z</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/petergyang/status/2037704776331448686" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">SW</div>
+        <div class="card-meta">
+          <div class="card-author">Swyx</div>
+          <div class="card-role">achieve ambition with intentionality, intensity, integrity &amp; insanity.</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">@openclaw @pmarca @latentspacepod we also talk about the need for @alexblania's ...</div>
+      <div class="card-summary">@openclaw @pmarca @latentspacepod we also talk about the need for @alexblania's @worldcoinfnd Proof of Human to fuck over these retards proudly ruining the internet
+
+https://t.co/6GkEGPALJW</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/swyx/status/2037695506055610768" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">JO</div>
+        <div class="card-meta">
+          <div class="card-author">Josh Woodward</div>
+          <div class="card-role">VP, @Google @GoogleLabs @GeminiApp @GoogleAIStudio</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">Our &quot;Veo Sailor&quot; from the Veo 3 launch wants to remind you: &quot;You can still make ...</div>
+      <div class="card-summary">Our &quot;Veo Sailor&quot; from the Veo 3 launch wants to remind you: &quot;You can still make videos in Gemini&quot; :) https://t.co/qX18rDMU2y</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/joshwoodward/status/2037674926715605331" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">ZA</div>
+        <div class="card-meta">
+          <div class="card-author">Zara Zhang</div>
+          <div class="card-role">Builder. Dangerously skips permissions. Harvard’17. GitHub: https://t.co/KCuEaje</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">Best Careers page I’ve ever seen https://t.co/upGQuygOtv</div>
+      <div class="card-summary">Best Careers page I’ve ever seen https://t.co/upGQuygOtv</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/zarazhangrui/status/2037661344154124309" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">ZA</div>
+        <div class="card-meta">
+          <div class="card-author">Zara Zhang</div>
+          <div class="card-role">Builder. Dangerously skips permissions. Harvard’17. GitHub: https://t.co/KCuEaje</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">The next generation of AI products will need to figure out how to reconcile huma...</div>
+      <div class="card-summary">The next generation of AI products will need to figure out how to reconcile human fallibility with agent infallibility</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/zarazhangrui/status/2037653942663098556" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">SW</div>
+        <div class="card-meta">
+          <div class="card-author">Swyx</div>
+          <div class="card-role">achieve ambition with intentionality, intensity, integrity &amp; insanity.</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">@openclaw @pmarca @latentspacepod pls like and subscribe i guess https://t.co/0a...</div>
+      <div class="card-summary">@openclaw @pmarca @latentspacepod pls like and subscribe i guess https://t.co/0af86LRpmU</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/swyx/status/2037642679501324438" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">SW</div>
+        <div class="card-meta">
+          <div class="card-author">Swyx</div>
+          <div class="card-role">achieve ambition with intentionality, intensity, integrity &amp; insanity.</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">just learned about create-context-graph - one command and it sets up key entity ...</div>
+      <div class="card-summary">just learned about create-context-graph - one command and it sets up key entity relationships for 22 top industry domains. been looking for something like this to &quot;layer on&quot; a social graph to every single app I make! https://t.co/FxBIK0EDrG https://t.co/D8HFstQjjz</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/swyx/status/2037620876179537989" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">NA</div>
+        <div class="card-meta">
+          <div class="card-author">Nan Yu</div>
+          <div class="card-role">head of product @linear</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">What if the next few YC batches have overly correlated performance because they ...</div>
+      <div class="card-summary">What if the next few YC batches have overly correlated performance because they all use GStack, which causes them to make the same kinds of mistakes but also biases to them towards being selected for admission.</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/thenanyu/status/2037617782943056148" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">NA</div>
+        <div class="card-meta">
+          <div class="card-author">Nan Yu</div>
+          <div class="card-role">head of product @linear</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">@bennstancil https://t.co/dqAZgjQTrt</div>
+      <div class="card-summary">@bennstancil https://t.co/dqAZgjQTrt</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/thenanyu/status/2037617279534289363" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">ZA</div>
+        <div class="card-meta">
+          <div class="card-author">Zara Zhang</div>
+          <div class="card-role">Builder. Dangerously skips permissions. Harvard’17. GitHub: https://t.co/KCuEaje</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">Turns out the bottleneck is the human’s context window, not the AI’s</div>
+      <div class="card-summary">Turns out the bottleneck is the human’s context window, not the AI’s</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/zarazhangrui/status/2037610198349894039" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">SA</div>
+        <div class="card-meta">
+          <div class="card-author">Sam Altman</div>
+          <div class="card-role">AI is cool i guess</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">The first steel beams went up this week at our Michigan Stargate site with Oracl...</div>
+      <div class="card-summary">The first steel beams went up this week at our Michigan Stargate site with Oracle and Related Digital https://t.co/Hl0NBqwfnS</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/sama/status/2037610000122839116" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">DA</div>
+        <div class="card-meta">
+          <div class="card-author">Dan Shipper</div>
+          <div class="card-role">ceo @every | the only subscription you need to stay at the edge of AI</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">created by @kieranklaassen at @every.  
+
+use the plugin! it changes how we work:...</div>
+      <div class="card-summary">created by @kieranklaassen at @every.  
+
+use the plugin! it changes how we work:
+https://t.co/eH2pYfLXV2</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/danshipper/status/2037589105417097284" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">DA</div>
+        <div class="card-meta">
+          <div class="card-author">Dan Shipper</div>
+          <div class="card-role">ceo @every | the only subscription you need to stay at the edge of AI</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">want an engineering philosophy truly built for the AI age?
+
+use compound enginee...</div>
+      <div class="card-summary">want an engineering philosophy truly built for the AI age?
+
+use compound engineering: https://t.co/TIPzJ6CihI</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/danshipper/status/2037589016371974486" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">AD</div>
+        <div class="card-meta">
+          <div class="card-author">Aditya Agarwal</div>
+          <div class="card-role">General Partner @SouthPkCommons, Co-Founder @Bevel_Health | Ex: Early Eng @faceb</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">Lingering is fatal. https://t.co/w1PWIu1KQW https://t.co/pQ62Tr5kWl</div>
+      <div class="card-summary">Lingering is fatal. https://t.co/w1PWIu1KQW https://t.co/pQ62Tr5kWl</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/adityaag/status/2037562946423767168" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">PE</div>
+        <div class="card-meta">
+          <div class="card-author">Peter Yang</div>
+          <div class="card-role">I share extremely practical AI tutorials and interviews | Join 140K+ readers at </div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">This is why I love @bentossell lol https://t.co/JmTdhkkDxz</div>
+      <div class="card-summary">This is why I love @bentossell lol https://t.co/JmTdhkkDxz</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/petergyang/status/2037547513163751764" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">PE</div>
+        <div class="card-meta">
+          <div class="card-author">Peter Yang</div>
+          <div class="card-role">I share extremely practical AI tutorials and interviews | Join 140K+ readers at </div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">Build an /exec-review AI skill to get your leader's product feedback anytime you...</div>
+      <div class="card-summary">Build an /exec-review AI skill to get your leader's product feedback anytime you want.
+
+A simple way to start is with their decision-making framework — what gets support vs. push back.
+
+Below's a real example from my friend who's a Meta VP. The complete skill has 5 more sections:
+
+→ Core principles
+→ Feedback patterns
+→ Communication style
+→ Review checklist
+→ Example comments
+
+📌 Get the full breakdown here: https://t.co/CyoSh2WEb9</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/petergyang/status/2037543771580289154" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">AD</div>
+        <div class="card-meta">
+          <div class="card-author">Aditya Agarwal</div>
+          <div class="card-role">General Partner @SouthPkCommons, Co-Founder @Bevel_Health | Ex: Early Eng @faceb</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">Everyone wants to avoid taking on the models head on.
+
+Surprising how few people...</div>
+      <div class="card-summary">Everyone wants to avoid taking on the models head on.
+
+Surprising how few people take the opposite approach
+
+Lean into the risk. But make a bet on capabilities that are 12-18 months out. The models suck at something today but I am going to bet it is good enough after XXX months</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/adityaag/status/2037531035978874936" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">DA</div>
+        <div class="card-meta">
+          <div class="card-author">Dan Shipper</div>
+          <div class="card-role">ceo @every | the only subscription you need to stay at the edge of AI</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">over 1,200 people are coming to @every's demo day today! 
+
+you should join: http...</div>
+      <div class="card-summary">over 1,200 people are coming to @every's demo day today! 
+
+you should join: https://t.co/Eu09MPI8Pj</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 0</span>
+          
+        </div>
+        <a href="https://x.com/danshipper/status/2037520384602312954" target="_blank" rel="noopener" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+      </div>
+    </div>
 
     <footer>
-      由 <a href="https://github.com/zarazhangrui/follow-builders" target="_blank">Follow Builders</a> 自动生成 · 2026/03/29 01:52
+      <p>由 <a href="https://vercel.com" target="_blank">Vercel</a> 驱动 · <a href="https://github.com/Doki21yy/coki" target="_blank">GitHub</a></p>
+      <p style="margin-top: 8px;">生成时间: 2026/3/29 02:15:06</p>
     </footer>
   </div>
 </body>
