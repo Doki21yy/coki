@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Builders Digest — {{date}}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --surface2: #1a1a25;
+      --border: #2a2a3a;
+      --text: #e8e8f0;
+      --text-muted: #8888a0;
+      --accent: #6366f1;
+      --accent2: #8b5cf6;
+      --accent-glow: rgba(99, 102, 241, 0.15);
+      --twitter: #1da1f2;
+      --podcast: #f97316;
+      --blog: #22c55e;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+    .container { max-width: 720px; margin: 0 auto; padding: 48px 24px 96px; }
+    header {
+      text-align: center;
+      margin-bottom: 56px;
+      position: relative;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      letter-spacing: 0.5px;
+    }
+    .badge .dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    h1 {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .subtitle { font-size: 16px; color: var(--text-muted); }
+    .stats-bar { display: flex; justify-content: center; gap: 32px; margin-top: 32px; flex-wrap: wrap; }
+    .stat { text-align: center; }
+    .stat-num { font-size: 28px; font-weight: 700; color: var(--accent); font-family: 'JetBrains Mono', monospace; }
+    .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-top: 4px; }
+    .section-divider { display: flex; align-items: center; gap: 16px; margin: 48px 0 32px; }
+    .section-divider .line { flex: 1; height: 1px; background: var(--border); }
+    .section-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+    .section-label .icon { width: 20px; height: 20px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+    .icon-x { background: rgba(29, 161, 242, 0.15); color: var(--twitter); }
+    .icon-podcast { background: rgba(249, 115, 22, 0.15); color: var(--podcast); }
+    .icon-blog { background: rgba(34, 197, 94, 0.15); color: var(--blog); }
+    .builder-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 20px;
+      position: relative;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .builder-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .builder-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--accent-glow) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+    }
+    .builder-card:hover::before { opacity: 1; }
+    .builder-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+    .builder-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+      color: white;
+      flex-shrink: 0;
+    }
+    .builder-info { flex: 1; }
+    .builder-name { font-weight: 600; font-size: 15px; margin-bottom: 2px; }
+    .builder-role { font-size: 13px; color: var(--text-muted); }
+    .builder-content { font-size: 14px; line-height: 1.75; color: var(--text); margin-bottom: 16px; }
+    .builder-content p { margin-bottom: 10px; }
+    .builder-content p:last-child { margin-bottom: 0; }
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding-left: 16px;
+      margin: 12px 0;
+      color: var(--text-muted);
+      font-style: italic;
+      font-size: 13px;
+    }
+    .builder-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 6px 12px;
+      background: var(--surface2);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .builder-link:hover { color: var(--twitter); border-color: var(--twitter); }
+    .builder-link svg { width: 12px; height: 12px; }
+    .engagement { display: flex; gap: 16px; margin-top: 12px; }
+    .eng-item { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--text-muted); }
+    .no-content {
+      text-align: center;
+      padding: 48px;
+      color: var(--text-muted);
+      font-size: 14px;
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: 16px;
+    }
+    footer {
+      text-align: center;
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    @media (max-width: 600px) {
+      h1 { font-size: 26px; }
+      .container { padding: 32px 16px 64px; }
+      .stats-bar { gap: 20px; }
+      .builder-card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge"><span class="dot"></span> AI Builders Digest</div>
+      <h1>{{title}}</h1>
+      <p class="subtitle">{{date}}</p>
+      <div class="stats-bar">
+        <div class="stat"><div class="stat-num">{{builderCount}}</div><div class="stat-label">Builders</div></div>
+        <div class="stat"><div class="stat-num">{{tweetCount}}</div><div class="stat-label">推文</div></div>
+        {{#podcastCount}}<div class="stat"><div class="stat-num">{{podcastCount}}</div><div class="stat-label">播客</div></div>{{/podcastCount}}
+        {{#blogCount}}<div class="stat"><div class="stat-num">{{blogCount}}</div><div class="stat-label">博客</div></div>{{/blogCount}}
+      </div>
+    </header>
+
+    {{#xBuilders}}
+    <div class="section-divider">
+      <div class="line"></div>
+      <div class="section-label"><span class="icon icon-x">𝕏</span> X / Twitter</div>
+      <div class="line"></div>
+    </div>
+    {{/xBuilders}}
+
+    {{#xBuilders}}
+    <div class="builder-card">
+      <div class="builder-header">
+        <div class="builder-avatar">{{avatar}}</div>
+        <div class="builder-info">
+          <div class="builder-name">{{name}}</div>
+          <div class="builder-role">{{role}}</div>
+        </div>
+      </div>
+      <div class="builder-content">{{{content}}}</div>
+      <div class="engagement">
+        {{#likes}}<div class="eng-item">❤️ {{likes}}</div>{{/likes}}
+        {{#retweets}}<div class="eng-item">🔁 {{retweets}}</div>{{/retweets}}
+        {{#replies}}<div class="eng-item">💬 {{replies}}</div>{{/replies}}
+      </div>
+      <div style="margin-top: 12px;">
+        <a href="{{url}}" target="_blank" class="builder-link">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          查看原推
+        </a>
+      </div>
+    </div>
+    {{/xBuilders}}
+
+    {{#podcasts}}
+    <div class="section-divider">
+      <div class="line"></div>
+      <div class="section-label"><span class="icon icon-podcast">🎙</span> 播客更新</div>
+      <div class="line"></div>
+    </div>
+    <div class="builder-card">
+      <div class="builder-header">
+        <div class="builder-avatar" style="background: linear-gradient(135deg, #f97316, #ea580c);">🎙</div>
+        <div class="builder-info">
+          <div class="builder-name">{{title}}</div>
+          <div class="builder-role">{{podcastName}}</div>
+        </div>
+      </div>
+      <div class="builder-content">{{{content}}}</div>
+      <div style="margin-top: 12px;">
+        <a href="{{url}}" target="_blank" class="builder-link">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.73a8.19 8.19 0 004.76 1.46v-3.4a4.85 4.85 0 01-1-.1z"/></svg>
+          观看视频
+        </a>
+      </div>
+    </div>
+    {{/podcasts}}
+
+    {{#blogs}}
+    <div class="section-divider">
+      <div class="line"></div>
+      <div class="section-label"><span class="icon icon-blog">📝</span> 官方博客</div>
+      <div class="line"></div>
+    </div>
+    <div class="builder-card">
+      <div class="builder-header">
+        <div class="builder-avatar" style="background: linear-gradient(135deg, #22c55e, #16a34a);">📝</div>
+        <div class="builder-info">
+          <div class="builder-name">{{title}}</div>
+          <div class="builder-role">{{blogName}}</div>
+        </div>
+      </div>
+      <div class="builder-content">{{{content}}}</div>
+      <div style="margin-top: 12px;">
+        <a href="{{url}}" target="_blank" class="builder-link">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.6 8.4c0-1-.4-1.4-1.2-1.4H10c-.8 0-1.2.4-1.2 1.4v5.2c0 1 .4 1.4 1.2 1.4h4.4c.8 0 1.2-.4 1.2-1.4V8.4zM12 2a10 10 0 100 20A10 10 0 0012 2z"/></svg>
+          阅读原文
+        </a>
+      </div>
+    </div>
+    {{/blogs}}
+
+    <footer>
+      由 <a href="https://github.com/zarazhangrui/follow-builders" target="_blank">Follow Builders</a> 自动生成 · {{generatedAt}}
+    </footer>
+  </div>
+</body>
+</html>
