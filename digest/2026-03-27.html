@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coki Knowledge Base</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --card-bg: #111118;
+      --card-hover: #1a1a25;
+      --accent: #6366f1;
+      --accent-hover: #818cf8;
+      --text-primary: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --border: #1e1e2e;
+      --shadow: rgba(99, 102, 241, 0.1);
+      --radius: 12px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header */
+    header {
+      padding: 60px 0 40px;
+      text-align: center;
+    }
+
+    header .logo {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+
+    header .tagline {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+    }
+
+    /* Stats Bar */
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      padding: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat .value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .stat .label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: 56px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-icon {
+      font-size: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+
+    .section-count {
+      margin-left: auto;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      background: var(--card-hover);
+      box-shadow: 0 12px 40px var(--shadow);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .card-meta {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .card-author {
+      font-weight: 600;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-role {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .card-type-badge {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--accent-hover);
+      flex-shrink: 0;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .card-summary {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .engagement {
+      display: flex;
+      gap: 12px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .engagement span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      transition: background 0.2s ease;
+    }
+
+    .card-link:hover {
+      background: var(--accent-hover);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 48px 0;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+      margin-top: 48px;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-bar {
+        gap: 20px;
+      }
+
+      header .logo {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">🦞 Coki Knowledge Base</div>
+      <p class="tagline">AI Builders 精选内容 · 每日更新</p>
+    </header>
+
+    <div class="stats-bar">
+      <div class="stat">
+        <div class="value">11</div>
+        <div class="label">精选内容</div>
+      </div>
+      <div class="stat">
+        <div class="value">3</div>
+        <div class="label">内容来源</div>
+      </div>
+      <div class="stat">
+        <div class="value">3月29日</div>
+        <div class="label">更新日期</div>
+      </div>
+    </div>
+
+    
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">𝕏</span>
+        <h2 class="section-title">Twitter/X</h2>
+        <span class="section-count">11</span>
+      </div>
+      <div class="cards-grid">
+        
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">PE</div>
+        <div class="card-meta">
+          <div class="card-author">Peter Steinberger</div>
+          <div class="card-role">OpenClaw 核心贡献者</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">OpenClaw 新功能：ACP Session 接管 + MCP 支持</div>
+      <div class="card-summary">OpenClaw 即将推出重磅功能：通过 /acp spawn codex --bind here 可以直接接管当前 Session，相当于把 Codex/Claude Code/OpenCode 绑定到现有会话里。此外，下一个版本的 OpenClaw 本身就是一个 MCP Server，可以替代 Anthropic 的 Message Channel MCP，连接更广泛的消息提供商生态。这是 OpenClaw 从 CLI 工具向 AI Agent 平台演进的关键一步。Peter 还自嘲说从 PR 里能看出你用了什么工具（暗示代码风格差异）。</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 1.5k</span>
+          <span>🔁 69</span>
+        </div>
+        <a href="https://x.com/steipete/status/2037715163562815817" target="_blank" rel="noopener nofollow" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">AA</div>
+        <div class="card-meta">
+          <div class="card-author">Aaron Levie</div>
+          <div class="card-role">CEO @ Box</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">企业自动化的核心瓶颈：Context Gap</div>
+      <div class="card-summary">Aaron Levie 深度剖析了企业无法大规模落地 AI Agent 的根本原因——Context Gap（上下文缺口）。他认为软件开发之所以 AI 表现好，是因为场景相对简单：代码库自带上下文、权限模型清晰、用户能提供足够的 context、输出结果可快速验证。但知识工作完全不同：数据躺在遗留系统的孤岛里、权限混乱、信息没有为 Agent 做好准备。他指出：谁能帮助企业填补这个 Context Gap，谁就能在 Agent 时代胜出。</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 118</span>
+          <span>🔁 17</span>
+        </div>
+        <a href="https://x.com/levie/status/2037744753073385518" target="_blank" rel="noopener nofollow" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">SW</div>
+        <div class="card-meta">
+          <div class="card-author">Swyx</div>
+          <div class="card-role">Cognition / Latent Space Pod</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">create-context-graph：一键为 App 叠加社交图谱</div>
+      <div class="card-summary">Swyx 发现了一个名为 create-context-graph 的工具，声称一条命令就能为 22 个主流行业领域建立关键实体关系图谱，并将社交图谱层叠到任何 App 上。他在 latentspacepod 和 pmarca 的讨论中还提到了 Worldcoin 的 Proof of Human 项目，认为这是解决 AI 滥用问题的必要手段。</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 382</span>
+          <span>🔁 27</span>
+        </div>
+        <a href="https://x.com/swyx/status/2037620876179537989" target="_blank" rel="noopener nofollow" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">ZA</div>
+        <div class="card-meta">
+          <div class="card-author">Zara Zhang</div>
+          <div class="card-role">Builder, Harvard '17</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">下一代 AI 产品需要调和人类局限性与 Agent 无所不能之间的矛盾</div>
+      <div class="card-summary">Zara Zhang 抛出了两个深刻观点：① 下一代 AI 产品需要解决的核心矛盾是「人类易犯错 vs Agent 从不犯错」之间的落差；② 「瓶颈其实是人类的 context window，而不是 AI 的 context window」——我们给 Agent 的上下文往往不够精确和完整，导致输出质量受限于人而非机器。这两条洞察直指当下 AI 产品设计的盲区。</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 146</span>
+          <span>🔁 12</span>
+        </div>
+        <a href="https://x.com/zarazhangrui/status/2037653942663098556" target="_blank" rel="noopener nofollow" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">AD</div>
+        <div class="card-meta">
+          <div class="card-author">Aditya Agarwal</div>
+          <div class="card-role">GP @ SouthPkCommons, Ex-CTO @ Dropbox</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">竞争策略：主动拥抱风险，押注 12-18 个月后的能力</div>
+      <div class="card-summary">Aditya Agarwal 分享了一个反直觉的商业洞察：大多数公司都避免与模型正面竞争，但正确的做法恰恰相反——主动押注模型 12-18 个月后的能力。他说：「模型今天在某件事上做得很烂，但我赌 XXX 个月后它就够好了。」这种思维模式对于 AI 产品路线图制定和投资决策都有重要启发。他同时引用了「Lingering is fatal」，强调执行速度在 AI 时代的重要性。</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 62</span>
+          <span>🔁 6</span>
+        </div>
+        <a href="https://x.com/adityaag/status/2037531035978874936" target="_blank" rel="noopener nofollow" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">PE</div>
+        <div class="card-meta">
+          <div class="card-author">Peter Yang</div>
+          <div class="card-role">Product @ Roblox, AI Newsletter 作者</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">跟 Anthropic 内部设计师学 Claude Cowork</div>
+      <div class="card-summary">Peter Yang 宣布即将发布与 Anthropic 内部设计师 Jenny 的访谈，主题是如何在 Anthropic 内部使用 Claude Cowork。预告内容包括：现场演示从 feedback 到产品 deck 的完整流程，以及 Cowork 背后的真实创建故事。他还分享了如何通过 /exec-review 技能获取领导产品反馈的方法论——从决策框架入手，弄清楚什么会得到支持、什么会被 push back。</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 74</span>
+          <span>🔁 5</span>
+        </div>
+        <a href="https://x.com/petergyang/status/2037704776331448686" target="_blank" rel="noopener nofollow" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">GA</div>
+        <div class="card-meta">
+          <div class="card-author">Garry Tan</div>
+          <div class="card-role">President &amp; CEO @ Y Combinator</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">Boris 的软件方法论改变了我的人生</div>
+      <div class="card-summary">Garry Tan 强烈推荐了 Boris 的访谈（关于软件方法论），称它彻底改变了他对自己做事方式的看法，促使他更激进地发布产品迭代。Boris 的思想影响了他对 fast iteration 和 releasing personal methodologies 的重视。他同时提到在 GStack 上跑 /plan-eng-review 和 /ship 的工作流效果很好。</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 63</span>
+          <span>🔁 5</span>
+        </div>
+        <a href="https://x.com/garrytan/status/2037772478198739346" target="_blank" rel="noopener nofollow" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">SA</div>
+        <div class="card-meta">
+          <div class="card-author">Sam Altman</div>
+          <div class="card-role">CEO @ OpenAI</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">Stargate Michigan 站点正式动工</div>
+      <div class="card-summary">Sam Altman 宣布 Stargate Michigan 站点（与 Oracle 和 Related Digital 合作）的第一批钢梁本周正式架设，标志着 OpenAI 美国基础设施扩张进入新阶段。这是继德克萨斯之后 Stargate 项目的第二个主要在建地点。</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 5.2k</span>
+          <span>🔁 294</span>
+        </div>
+        <a href="https://x.com/sama/status/2037610000122839116" target="_blank" rel="noopener nofollow" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">DA</div>
+        <div class="card-meta">
+          <div class="card-author">Dan Shipper</div>
+          <div class="card-role">CEO @ Every</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">AI 时代的工程哲学：Compound Engineering</div>
+      <div class="card-summary">Dan Shipper 在 Every 正式推出 Compound Engineering 概念——一种真正为 AI 时代构建的工程哲学。他强调这是 AI 时代产品开发的方法论基础。Every 的 Demo Day 吸引了超过 1200 人报名参加。</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 83</span>
+          <span>🔁 9</span>
+        </div>
+        <a href="https://x.com/danshipper/status/2037589016371974486" target="_blank" rel="noopener nofollow" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">NA</div>
+        <div class="card-meta">
+          <div class="card-author">Nan Yu</div>
+          <div class="card-role">Head of Product @ Linear</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">YC 批次过度相关性的隐患：GStack 导致相同错误模式</div>
+      <div class="card-summary">Nan Yu 提出了一个有趣的假说：如果接下来几届 YC 批次都使用 GStack，会不会因为 GStack 导致的相同错误模式而产生过度相关的表现？这种相关性既可能让他们更容易被选中（bias towards admission），也可能让他们犯下同样的系统性错误。这是一个关于 AI 工具同质化风险的深刻思考。</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 8</span>
+          
+        </div>
+        <a href="https://x.com/thenanyu/status/2037617782943056148" target="_blank" rel="noopener nofollow" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">JO</div>
+        <div class="card-meta">
+          <div class="card-author">Josh Woodward</div>
+          <div class="card-role">VP @ Google Labs / Gemini</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">用 Gemini 也能做视频：Veo Sailor 为 Gemini 打 Call</div>
+      <div class="card-summary">Google Labs VP Josh Woodward 转发了 Veo 3 发布会上的一段视频，视频中的 Veo Sailor 提醒用户：「你还是可以在 Gemini 里做视频哦！」这是 Google 在视频生成 AI 领域（Veo 3）与 Gemini 产品整合的一次有趣营销。</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 149</span>
+          <span>🔁 7</span>
+        </div>
+        <a href="https://x.com/joshwoodward/status/2037674926715605331" target="_blank" rel="noopener nofollow" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>由 <a href="https://vercel.com" target="_blank">Vercel</a> 驱动 · <a href="https://github.com/Doki21yy/coki" target="_blank">GitHub</a></p>
+      <p style="margin-top: 8px;">生成时间: 2026/3/29 12:39:08</p>
+    </footer>
+  </div>
+</body>
+</html>
