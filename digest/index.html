@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coki Knowledge Base</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0f; --card-bg: #111118; --card-hover: #1a1a25;
+      --accent: #6366f1; --accent-hover: #818cf8;
+      --text-primary: #e2e8f0; --text-secondary: #94a3b8;
+      --border: #1e1e2e; --shadow: rgba(99,102,241,0.1); --radius: 12px;
+    }
+    body { font-family: 'Inter',-apple-system,BlinkMacSystemFont,sans-serif; background: var(--bg); color: var(--text-primary); line-height: 1.6; min-height: 100vh; }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+    header { padding: 60px 0 40px; text-align: center; }
+    .logo { font-size: 2.5rem; font-weight: 700; background: linear-gradient(135deg,var(--accent),var(--accent-hover)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; }
+    .tagline { color: var(--text-secondary); font-size: 1.1rem; }
+    .date-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 48px; }
+    .date-card { display: flex; align-items: center; justify-content: space-between; padding: 20px 28px; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); text-decoration: none; color: var(--text-primary); transition: transform 0.2s,box-shadow 0.2s,background 0.2s; }
+    .date-card:hover { transform: translateY(-2px); background: var(--card-hover); box-shadow: 0 8px 32px var(--shadow); }
+    .date-card.today { border-color: var(--accent); background: rgba(99,102,241,0.08); }
+    .date-info { display: flex; flex-direction: column; gap: 2px; }
+    .date-main { font-size: 1.15rem; font-weight: 600; }
+    .date-weekday { font-size: 0.85rem; color: var(--text-secondary); }
+    .date-arrow { color: var(--accent); font-size: 1.2rem; }
+    footer { text-align: center; padding: 48px 0; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--border); }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    @media (max-width: 600px) { .date-card { padding: 16px 20px; } header .logo { font-size: 2rem; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">🦞 Coki Knowledge Base</div>
+      <p class="tagline">AI Builders 精选内容 · 每日归档</p>
+    </header>
+    <div class="date-list">
+      <a href="2026-03-29.html" class="date-card" data-date="2026-03-29">
+        <div class="date-info">
+          <div class="date-main">2026年3月29日</div>
+          <div class="date-weekday">周日</div>
+        </div>
+        <div class="date-arrow">→</div>
+      </a>
+    </div>
+    <footer>
+      <p>由 <a href="https://vercel.com" target="_blank">Vercel</a> 驱动 · <a href="https://github.com/Doki21yy/coki" target="_blank">GitHub</a></p>
+    </footer>
+  </div>
+  <script>
+    const today = '2026-03-29';
+    document.querySelectorAll('.date-card').forEach(c => { if (c.dataset.date === today) c.classList.add('today'); });
+  </script>
+</body>
+</html>
