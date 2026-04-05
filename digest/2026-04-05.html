@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coki Knowledge Base</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --card-bg: #111118;
+      --card-hover: #1a1a25;
+      --accent: #6366f1;
+      --accent-hover: #818cf8;
+      --text-primary: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --border: #1e1e2e;
+      --shadow: rgba(99, 102, 241, 0.1);
+      --radius: 12px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header */
+    header {
+      padding: 60px 0 40px;
+      text-align: center;
+    }
+
+    header .logo {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+
+    header .tagline {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+    }
+
+    /* Stats Bar */
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      padding: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat .value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .stat .label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: 56px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-icon {
+      font-size: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+
+    .section-count {
+      margin-left: auto;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      background: var(--card-hover);
+      box-shadow: 0 12px 40px var(--shadow);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .card-meta {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .card-author {
+      font-weight: 600;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-role {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .card-type-badge {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--accent-hover);
+      flex-shrink: 0;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .card-summary {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .engagement {
+      display: flex;
+      gap: 12px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .engagement span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      transition: background 0.2s ease;
+    }
+
+    .card-link:hover {
+      background: var(--accent-hover);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 48px 0;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+      margin-top: 48px;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-bar {
+        gap: 20px;
+      }
+
+      header .logo {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">🦞 Coki Knowledge Base</div>
+      <p class="tagline">AI Builders 精选内容 · 每日更新</p>
+    </header>
+
+    <div class="stats-bar">
+      <div class="stat">
+        <div class="value">12</div>
+        <div class="label">精选内容</div>
+      </div>
+      <div class="stat">
+        <div class="value">5</div>
+        <div class="label">内容来源</div>
+      </div>
+      <div class="stat">
+        <div class="value">4月5日</div>
+        <div class="label">更新日期</div>
+      </div>
+    </div>
+
+    
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">𝕏</span>
+        <h2 class="section-title">Twitter/X</h2>
+        <span class="section-count">9</span>
+      </div>
+      <div class="cards-grid">
+        
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">KE</div>
+        <div class="card-meta">
+          <div class="card-author">Kevin Weil</div>
+          <div class="card-role">VP Science @OpenAI</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">AI 模型的证明越来越优雅——能力提升不只是数量</div>
+      <div class="card-summary">Kevin Weil 指出，AI 不仅在解决更多开放问题，其证明的质量也在随着模型改进而提升——证明本身变得更优雅。这指向了一个更深层的趋势：模型能力不只是参数量的函数，推理过程的质量（elegance）也在系统性提升。对于从业者而言，这意味着 AI 在复杂推理任务上的潜力可能远超我们目前的评估框架。</div>
+      <div class="card-footer">
+        <div class="engagement">
+          
+          
+        </div>
+        <a href="https://x.com/kevinweil/status/2039200605672284572" target="_blank" rel="noopener nofollow" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">AA</div>
+        <div class="card-meta">
+          <div class="card-author">Aaron Levie</div>
+          <div class="card-role">CEO @Box</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">Agent 时代的企业困境：安全合规才是生产力的真正瓶颈</div>
+      <div class="card-summary">Aaron Levie 提出了当前 AI agent 热潮中最被忽视的核心矛盾：真正限制企业从 agent 生产力获益的，不是模型能力，而是安全、合规、治理，以及管理者审查 agent 工作成果的能力。企业不可能把核心系统和数据完全交给 agent 随意访问——监管要求、风险控制、审计追溯，这些才是企业采用 AI 的真实壁垒。他指出，最近 48 小时的事件就是很好的例证：为什么企业不会愿意承担所有技术的所有风险。结论是：AI 生产力有代价，企业必须先建立配套的系统、流程和控制机制，才能真正 scale agent。</div>
+      <div class="card-footer">
+        <div class="engagement">
+          
+          
+        </div>
+        <a href="https://x.com/levie/status/2039216522028257549" target="_blank" rel="noopener nofollow" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">AD</div>
+        <div class="card-meta">
+          <div class="card-author">Aditya Agarwal</div>
+          <div class="card-role">General Partner @SouthPkCommons / Ex-CTO @Dropbox</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">公开源代码的哲学：Facebook 早年 'fix in production' 的现代版本</div>
+      <div class="card-summary">Aditya Agarwal 将开源和公开代码与 Facebook 早年&quot;在生产环境修复 bug&quot;的文化做了类比。如果软件本质上是高度动态的，那么公开源代码——让任何人都能审查、贡献、fork——也许并没有听起来那么疯狂。当然，他也承认这可能听起来完全疯狂。这个 observation 的价值在于：它质疑了软件工程中&quot;保护源代码&quot;的默认假设，指向一个可能的未来——透明度和协作正在成为新的竞争力维度。</div>
+      <div class="card-footer">
+        <div class="engagement">
+          
+          
+        </div>
+        <a href="https://x.com/adityaag/status/2039198010681565665" target="_blank" rel="noopener nofollow" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">AN</div>
+        <div class="card-meta">
+          <div class="card-author">Andrej Karpathy</div>
+          <div class="card-role">AI 研究员，前 Tesla AI 总监、OpenAI 创始团队</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">LLM 知识库 + Cursor 3 发布 + AI Agent 开发经验</div>
+      <div class="card-summary">Karpathy 分享了他用 LLM 构建个人知识库的工作流：原始文档摄入 → LLM 编译成 .md wiki → Obsidian 作为前端查看 → LLM agent 跑 Q&amp;A 和 lint → 增量增强 wiki。他强调这套系统让他的大部分 token 吞吐量从操控代码转向操控知识，LLM 在这个规模（~100 篇文章、~40 万词）上已经不需要 fancy RAG，直接维护索引文件就能很好地读取和推理。
+
+另外 Cursor 3 正式发布，新界面大幅简化，砍掉过多按钮，回归直接和 agent 对话的核心体验。Cursor Design Lead Ryo Lu 发帖阐释了&quot;玻璃 vs 黑盒&quot;的产品哲学：AI 工具不该让用户变成只会按按钮的操作工，玻璃质感的界面让用户始终能看到 agent 在做什么、随时介入和引导，保持深度参与感。</div>
+      <div class="card-footer">
+        <div class="engagement">
+          
+          
+        </div>
+        <a href="https://x.com/karpathy/status/2039805659525644595" target="_blank" rel="noopener nofollow" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">AA</div>
+        <div class="card-meta">
+          <div class="card-author">Aaron Levie</div>
+          <div class="card-role">Box CEO</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">Box CEO：AI Agent 开发的血泪教训——必须无情抛弃旧架构</div>
+      <div class="card-summary">Levie 总结了一个核心经验：构建 AI Agent 必须对架构&quot;无情&quot;。模型能力飞速提升，很多之前为弥补模型不足而构建的 scaffolding（分块策略、搜索增强、上下文窗口处理等）反而会成为约束。他描述的循环是：1）围绕 LLM 建一堆系统确保特定任务效果好 → 2）模型能力飞跃，这些系统变得多余甚至有害 → 3）果断移除旧 scaffolding 获得新性能 → 4）模型新能力涌现，解决更难题 → 回到步骤 1。他说 Box Agent 从最初设计到最终发布，中间因为模型变强而被迫演进多次架构组件，提醒团队&quot;不要对已经建好的技术产生留恋&quot;。</div>
+      <div class="card-footer">
+        <div class="engagement">
+          
+          
+        </div>
+        <a href="https://x.com/levie/status/2039931799414194621" target="_blank" rel="noopener nofollow" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">PE</div>
+        <div class="card-meta">
+          <div class="card-author">Peter Steinberger</div>
+          <div class="card-role">OpenClaw 核心贡献者</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">Peter Steinberger：AI 生成的 CVE 报告正在淹没开源项目维护者</div>
+      <div class="card-summary">Steinberger 引用了 Linux 内核安全邮件列表的数据：两年前每周 2-3 份安全报告，去年因 AI slop 上升到每周约 10 份，今年初以来每天 5-10 份。这些报告大多数是正确的，维护团队甚至不得不招募更多人来帮忙处理。他的预测是这将&quot;杀死一些开源项目&quot;——不是报告质量的问题，而是量太大，维护者精力被耗尽。</div>
+      <div class="card-footer">
+        <div class="engagement">
+          
+          
+        </div>
+        <a href="https://x.com/steipete/status/2039782190838686088" target="_blank" rel="noopener nofollow" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">CL</div>
+        <div class="card-meta">
+          <div class="card-author">Claude</div>
+          <div class="card-role">Anthropic AI 助手</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">Anthropic：Claude Cowork 和 Claude Code Desktop Windows 版正式发布</div>
+      <div class="card-summary">Claude 官方账号宣布 Claude Cowork（协作功能）和 Claude Code Desktop 的 Windows 版本正式上线，这是继 macOS 之后的重要平台扩展。</div>
+      <div class="card-footer">
+        <div class="engagement">
+          
+          
+        </div>
+        <a href="https://x.com/claudeai/status/2039836891508261106" target="_blank" rel="noopener nofollow" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">CL</div>
+        <div class="card-meta">
+          <div class="card-author">Claude</div>
+          <div class="card-role">AI 助手 @ Anthropic</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">Computer use 登陆 Claude Code</div>
+      <div class="card-summary">Anthropic 官方宣布 Computer use 功能正式登陆 Claude Code。Claude 现在可以直接打开你的应用、点击 UI 界面、测试它自己写的代码——全部在 CLI 里完成。目前已在 Pro 和 Max 计划中开放 research preview。这条 announcement 获得了 11545 个点赞和 878 次转发，是本次采集中最热门的单条内容。</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 11.5k</span>
+          <span>🔁 878</span>
+        </div>
+        <a href="https://x.com/claudeai/status/2038663014098899416" target="_blank" rel="noopener nofollow" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">NA</div>
+        <div class="card-meta">
+          <div class="card-author">Nan Yu</div>
+          <div class="card-role">Head of Product @ Linear</div>
+        </div>
+        <span class="card-type-badge">𝕏 Twitter/X</span>
+      </div>
+      <div class="card-title">Trillion dollars</div>
+      <div class="card-summary">Linear 产品负责人 Nan Yu 发推暗示 AI 领域的巨大机会，引用了关于万亿美元市场的内容，引发 152 次点赞。他同时还分享了另一条关于产品观的推文。Nan Yu 作为 Linear 的产品负责人，其对工具/效率软件领域的观察值得关注。</div>
+      <div class="card-footer">
+        <div class="engagement">
+          <span>❤️ 152</span>
+          <span>🔁 1</span>
+        </div>
+        <a href="https://x.com/thenanyu/status/2038599289081872893" target="_blank" rel="noopener nofollow" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">🎙️</span>
+        <h2 class="section-title">播客</h2>
+        <span class="section-count">3</span>
+      </div>
+      <div class="cards-grid">
+        
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">AN</div>
+        <div class="card-meta">
+          <div class="card-author">Andrew（General Intelligence Company of New York）</div>
+          <div class="card-role">Founder @General Intelligence Co.</div>
+        </div>
+        <span class="card-type-badge">🎙️ 播客</span>
+      </div>
+      <div class="card-title">Can One Person Build a Billion-Dollar Startup? — The General Intelligence Company</div>
+      <div class="card-summary">核心结论：一个 AI agent 管理多层其他 agent 的架构正在成为现实，6-12个月内可能看到完整雏形。
+
+Andrew 在 Data Driven NYC 的演讲中展示了他们的最新产品 Co-Founder CTO——一个完全自主的工程部门。demo 现场展示了：产品 agent（Claude Code）写代码 → Browser agent 测试 → PR 自动合并 → Vercel 部署 → 基础设施 agent 监控并自动修复故障。整个流程在云端完成，无需本地开发环境。
+
+关键数据：他们团队平均每个工程师每天 25 个 PR，有时一天在 Opus token 上花费 $4,000，token 成本已经开始超过人力成本。Andrew 的判断是：我们正在从人类资本转向智能资本。
+
+他对&quot;一人十亿美元公司&quot;的框架是：产品、卖产品、支持产品、运营。这四件事未来都可以由 agent 完成，而他们的定位是&quot;中层管理 agent&quot;——协调下层的各种专用 agent。6 个月内的 roadmap 包括完整的 customer support agent 和 CRO/收入销售 stack。
+
+这对从业者意味着什么：
+- AI 原生的开发流程（纯云端、无 IDE、本地 preview 环境消失）正在发生
+- 人力成本结构正在被 token 成本替代，衡量生产力的方式需要重新定义
+- 第一个真正&quot;全栈 AI 公司&quot;的实验已经开始，6 个月内会有更完整的答案</div>
+      <div class="card-footer">
+        <div class="engagement">
+          
+          
+        </div>
+        <a href="https://youtube.com/watch?v=rX3CxlGm-00" target="_blank" rel="noopener nofollow" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">JA</div>
+        <div class="card-meta">
+          <div class="card-author">Jason Kelly</div>
+          <div class="card-role">Ginkgo Bioworks CEO</div>
+        </div>
+        <span class="card-type-badge">🎙️ 播客</span>
+      </div>
+      <div class="card-title">Training Data 播客：Ginkgo Bioworks CEO Jason Kelly 谈 AI 如何重塑科学研究</div>
+      <div class="card-summary">Ginkgo Bioworks CEO Jason Kelly 在 Training Data 播客中分享了大量干货：
+
+**核心结论：** AI + 机器人自动化实验室将根本性改变科学发现的速度和成本结构，这是过去 30 年科技革命从未做到的事。
+
+**与 OpenAI 的实验：** 他们给 AI 模型接入自动化实验机器人（cell-free 蛋白合成），30,000 次实验/轮，4 轮后超越斯坦福团队的最优结果，6 轮后超越 40%。模型不需要理解生物学，只需要逻辑推理 + 数据分析 + 设计下一个实验——这和人类科学家的核心工作完全一致。
+
+**AI 的真正价值：** 不是让 AI 比科学家更有创造力，而是让 AI 不知疲倦地跑实验（24/7）、跨 100 个假设并行、每天实时共享数据。这解决了科研的两个根本低效：信息交换周期太长（一年发一篇论文）、实验设备利用率极低（&lt;20%）。
+
+**他的愿景：** 未来一个科学家团队 + 100 个 AI scientist 并行工作，每天交换实验数据，每周产出一份&quot;活笔记本&quot;，可以像读论文一样实时获取所有进展。这将把科学发现的速度提高 10-100 倍。
+
+**对生物技术行业的影响：** Kelly 认为这不只是让制药更便宜，而是让&quot;编程生命&quot;这件事本身变得像写软件一样普及，届时消费者生物技术（减肥药、抗衰老、个性化医疗）才是真正的大市场。</div>
+      <div class="card-footer">
+        <div class="engagement">
+          
+          
+        </div>
+        <a href="https://www.youtube.com/playlist?list=PLOhHNjZItNnMm5tdW61JpnyxeYH5NDDx8" target="_blank" rel="noopener nofollow" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <div class="avatar">MI</div>
+        <div class="card-meta">
+          <div class="card-author">Mike Krieger</div>
+          <div class="card-role">Instagram 联合创始人 / Anthropic Labs 产品负责人</div>
+        </div>
+        <span class="card-type-badge">🎙️ 播客</span>
+      </div>
+      <div class="card-title">Building Is the Easy Part Now | Mike Krieger on What AI Changed</div>
+      <div class="card-summary">Instagram 联合创始人、现任 Anthropic Labs 产品负责人 Mike Krieger 在 AI &amp; I 播客中分享了他对 2026 年产品开发范式的深度反思。
+
+核心结论：AI 让「建造」变得前所未有的简单，但「决定建造什么」和「保持产品直觉」反而成了最稀缺的能力。
+
+【建造已 trivial，但剪枝仍是艺术】Krieger 指出，今天的模型不仅能帮你从 0 到 1，甚至能从 0 直接到终态——几小时内完成。他让 Claude 用两小时重建了当年失败的产品 Bourbon，包含了 Bourbon 本身都没有的滤镜功能。但问题在于：模型擅长做加法，不擅长做减法。「产品设计中的艺术与科学，在于知道该放什么进去，而这些直觉需要时间养成。」
+
+【室内树问题】Krieger 提出了一个精妙的「室内树」比喻：传统开发是让树在风中慢慢成长，每一步都暴露在真实用户反馈中；而 AI 加速后的开发更像是把整棵树在室内一次性培育好再拿出来——缺少了每个阶段与真实环境碰撞所形成的韧性。他以自己做的产品 Proof 为例：vibe coding 太上头，一口气加了太多功能，最后推翻重来，借鉴了 Monologue（极简语音笔记 app）的思路重新设计，才实现病毒式传播。
+
+【更愿意重写】面对加速的开发节奏，Krieger 的团队学会了更果断地重写。传统观点认为 Fred Brooks 的「不要重写软件」是铁律，但现在有了模型的 diff 能力加持，重写不再是年度工程，而是几天内的事。他们在 pre-launch 阶段经常建完 V1 发现过度复杂化，直接拆掉建 V2。
+
+【Agent Native 是 2025 新标杆】Krieger 盛赞 Claude Code 是「2025 年最纯正的 agent native 产品」——它的每个 primitive 都能被 Claude 操作和理解。内部甚至把 agent native 包装成了 skill，让 Claude 在原型设计时自动以 agent native 思维工作。Anthropic 内部也在思考：如何让 Claude 建造的软件天生就更具 agent native 特性，而不只是给传统软件打补丁。
+
+【Hiring 的双向变化】Krieger 观察到 hiring 正在双向分化：一方面需要高级系统架构师（分布式系统经验依然稀缺），另一方面需要极度聚焦、有强烈 conviction 的 founder 型人。他说最近招了一位 GM，技术背景轻但产品直觉极强——放在一年前根本不可能，因为当时的 coding 模型还不够好。「当一个 feature 成长到能独立成为产品时，它就需要自己的 team 了。AI 让一个人能 hold 的 scope 变大了，但那条线依然存在。」
+
+【信任的转移】谈及 OpenClaw 时，Krieger 分享了一个有趣观察：OpenClaw 让用户创造了「R2C2」（Doki 的）和「Shelly」（他女朋友的），产生了强烈的归属感。他还提到了「影子 org chart」概念：当组织里每个人都开始用各自的 agent，每个 agent 就会变成那个人的专长代理，最终形成一种新的工作结构。
+
+这对从业者意味着什么：
+• 建造门槛已大幅降低，聚焦和剪枝能力比编码能力更稀缺
+• 愿意快速重写、快速 pivot 是团队的核心竞争力
+• Agent native 不只是功能，而是一种设计哲学——让软件的每个 primitive 都能被 AI 操作</div>
+      <div class="card-footer">
+        <div class="engagement">
+          
+          
+        </div>
+        <a href="https://youtube.com/watch?v=KRv9GpJYrUA" target="_blank" rel="noopener nofollow" class="card-link">
+          阅读原文 →
+        </a>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>由 <a href="https://vercel.com" target="_blank">Vercel</a> 驱动 · <a href="https://github.com/Doki21yy/coki" target="_blank">GitHub</a></p>
+      <p style="margin-top: 8px;">生成时间: 2026/4/5 12:19:34</p>
+    </footer>
+  </div>
+</body>
+</html>
